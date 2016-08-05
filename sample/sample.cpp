@@ -38,23 +38,26 @@
 void sample_1()
 {
    Json::Value v;
-
-   // creating the json content
    v["id"]      = 1;
    v["name"]    = "nithin";
-   v["price"]   = "10.123";
+   v["price"]   = 10.123;
    v["tags"][0] = "green";
    v["tags"][1] = "red";
    v["dimensions"]["length"] = 10;
    v["dimensions"]["width"] = 20;
    v["dimensions"]["height"] = 30;
 
-   JsonValidator validator("sample_schema.json");
-   int ret = validator.validate(&v); 
-   if (0 == ret) {
-      std::cout << "Valid JSON" << std::endl;
-   } else {
-      std::cout << "Invalid JSON" << std::endl;
+   try {
+      JsonValidator validator;
+      validator.readSchema("sample_schema.json");
+      int ret = validator.validate(&v); 
+      if (0 == ret) {
+         std::cout << "Sample-1: Valid JSON" << std::endl;
+      } else {
+         std::cout << "Sample-1: Invalid JSON" << std::endl;
+      }
+   } catch (Exception &e) {
+      std::cout << e.what() << std::endl;
    }
 }
 
@@ -63,10 +66,70 @@ void sample_1()
  */
 void sample_2()
 {
+   Json::Value schema;
+   schema["type"] = "object";
+   schema["properties"]["id"]["type"] = "integer";
+   schema["properties"]["name"]["type"] = "string";
+   schema["properties"]["price"]["type"]= "number";
+   Json::Value tags;
+   tags["type"] = "array";
+   tags["items"]["type"] = "string";
+   schema["properties"]["tags"] = tags;
+   Json::Value dimensions;
+   dimensions["type"] = "object";
+   dimensions["properties"]["height"]["type"] = "number";
+   dimensions["properties"]["width"]["type"] = "number";
+   dimensions["properties"]["length"]["type"] = "number";
+   schema["properties"]["dimensions"] = dimensions;
+
+   Json::Value v;
+   v["id"]      = 1;
+   v["name"]    = "nithin";
+   v["price"]   = 10.123;
+   v["tags"][0] = "green";
+   v["tags"][1] = "red";
+   v["dimensions"]["length"] = 10;
+   v["dimensions"]["width"] = 20;
+   v["dimensions"]["height"] = 30;
+
+   try {
+      JsonValidator validator(&schema);
+      int ret = validator.validate(&v); 
+      if (0 == ret) {
+         std::cout << "Sample-2: Valid JSON" << std::endl;
+      } else {
+         std::cout << "Sample-2: Invalid JSON" << std::endl;
+      }
+   } catch (Exception &e) {
+      std::cout << e.what() << std::endl;
+   }
+}
+
+/**
+ * @brief The schema is given as Json::Value object
+ */
+void sample_3()
+{
+   std::string schema = "{\"type\" : \"string\"}";
+   Json::Value v = "nithin";
+
+   try {
+      JsonValidator validator(schema);
+      int ret = validator.validate(&v); 
+      if (0 == ret) {
+         std::cout << "Sample-3: Valid JSON" << std::endl;
+      } else {
+         std::cout << "Sample-3: Invalid JSON" << std::endl;
+      }
+   } catch (Exception &e) {
+      std::cout << e.what() << std::endl;
+   }
 }
 
 int main()
 {
    sample_1();
+   sample_2();
+   sample_3();
    return 0;
 }
