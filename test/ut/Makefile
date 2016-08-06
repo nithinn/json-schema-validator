@@ -18,7 +18,7 @@ CPPFLAGS += -I$(GTEST_DIR)/include/gtest/internal/ -I$(JVAL_SRC)
 CPPFLAGS += -I../ -I$(JVAL_DIR)/jsoncpp/json
 
 # Flags passed to the C++ compiler.
-CXXFLAGS += --std=c++0x -Wall -Wextra -pthread
+CXXFLAGS += --std=c++0x -g3 -Wall -Wextra -pthread
 
 LDFLAGS = -lm
 

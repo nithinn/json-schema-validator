@@ -95,6 +95,16 @@ JsonInteger::JsonInteger(Json::Value *schema) : JsonPrimitive(schema)
    }
 }
 
+JsonInteger::~JsonInteger()
+{
+   for (std::list<KeywordValidator*>::iterator itr = m_validators.begin();
+         itr != m_validators.end();
+         itr++)
+   {
+      delete *itr;
+   }
+}
+
 int JsonInteger::validate(const Json::Value *value)
 {
    for (std::list<KeywordValidator*>::iterator b = m_validators.begin();
@@ -150,6 +160,16 @@ JsonNumber::JsonNumber(Json::Value *schema) : JsonPrimitive(schema)
    }
 }
 
+JsonNumber::~JsonNumber()
+{
+   for (std::list<KeywordValidator*>::iterator itr = m_validators.begin();
+         itr != m_validators.end();
+         itr++)
+   {
+      delete *itr;
+   }
+}
+
 int JsonNumber::validate(const Json::Value *value)
 {
    for (std::list<KeywordValidator*>::iterator b = m_validators.begin();
@@ -186,6 +206,16 @@ JsonString::JsonString(Json::Value *schema) : JsonPrimitive(schema)
    if (schema->isMember("pattern")) {
       Json::Value pattern = schema->get("pattern", pattern);
       m_validators.push_back(new Pattern(pattern.asString()));
+   }
+}
+
+JsonString::~JsonString()
+{
+   for (std::list<KeywordValidator*>::iterator itr = m_validators.begin();
+         itr != m_validators.end();
+         itr++)
+   {
+      delete *itr;
    }
 }
 
@@ -256,6 +286,16 @@ JsonArray::JsonArray(Json::Value *schema) : JsonPrimitive(schema)
    }
 }
 
+JsonArray::~JsonArray()
+{
+   for (std::list<KeywordValidator*>::iterator itr = m_validators.begin();
+         itr != m_validators.end();
+         itr++)
+   {
+      delete *itr;
+   }
+}
+
 int JsonArray::validate(const Json::Value *value)
 {
    for (std::list<KeywordValidator*>::iterator b = m_validators.begin();
@@ -304,6 +344,16 @@ JsonObject::JsonObject(Json::Value *schema) : JsonPrimitive(schema)
       }
 
       m_validators.push_back(new Properties(properties, additionalProperties));
+   }
+}
+
+JsonObject::~JsonObject()
+{
+   for (std::list<KeywordValidator*>::iterator itr = m_validators.begin();
+         itr != m_validators.end();
+         itr++)
+   {
+      delete *itr;
    }
 }
 

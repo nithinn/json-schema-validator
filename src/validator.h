@@ -28,16 +28,28 @@
 class JsonValidator
 {
    public:
-      JsonValidator(const char *schema_file);
+      JsonValidator();
+
+      JsonValidator(Json::Value *schema);
+
+      JsonValidator(std::string &schema);
+
+      /**
+       * @brief Reads json schema from a file
+       *
+       * @param schema_file
+       */
+      void readSchema(const char *schema_file);
 
       int validate(const Json::Value *value);
 
+      ~JsonValidator();
+
    private:
-      void readSchema(const char *schema_file);
 
       void parseSchema(std::string &str);
 
-      JsonPrimitive  *m_primitive;
+      JsonPrimitive *m_primitive;
 };
 
 #endif

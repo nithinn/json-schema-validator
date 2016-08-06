@@ -10,7 +10,7 @@ SRC_DIR		= .
 CPPFLAGS += -I$(JVAL_SRC)/ -I$(JSON_INC)/
 
 # Flags passed to the C++ compiler.
-CXXFLAGS += --std=c++0x -Wall -Wextra -pthread
+CXXFLAGS += --std=c++0x -g3 -Wall -Wextra -pthread
 
 # Flags passed to the C++ linker
 LDFLAGS = -lm

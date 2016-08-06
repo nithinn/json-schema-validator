@@ -25,42 +25,42 @@
 
 class JsonInteger : public JsonPrimitive
 {
-   private:
-      std::list<KeywordValidator*> m_validators; 
-
    public:
       JsonInteger(Json::Value *schema);
-      ~JsonInteger() {}
+      ~JsonInteger();
       int validate(const Json::Value *value);
+
+   private:
+      std::list<KeywordValidator*> m_validators; 
 };
 
 class JsonNumber : public JsonPrimitive
 {
-   private:
-      std::list<KeywordValidator*> m_validators; 
-
    public:
       JsonNumber(Json::Value *schema);
-      ~JsonNumber() {}
+      ~JsonNumber();
       int validate(const Json::Value *value);
+
+   private:
+      std::list<KeywordValidator*> m_validators; 
 };
 
 class JsonString : public JsonPrimitive
 {
-   private:
-      std::list<KeywordValidator*> m_validators; 
-
    public:
       JsonString(Json::Value *schema);
-      ~JsonString() {}
+      ~JsonString();
       int validate(const Json::Value *value);
+
+   private:
+      std::list<KeywordValidator*> m_validators; 
 };
 
 class JsonObject : public JsonPrimitive
 {
    public:
       JsonObject(Json::Value *element);
-      ~JsonObject() {}
+      ~JsonObject();
       int validate(const Json::Value *value);
    
    private:
@@ -70,13 +70,13 @@ class JsonObject : public JsonPrimitive
 
 class JsonEnum : public JsonPrimitive
 {
-   private:
-      void getOptions(std::vector<std::string> &options);
-
    public:
       JsonEnum(Json::Value *element);
       ~JsonEnum() {}
       int validate(const Json::Value *value);
+
+   private:
+      void getOptions(std::vector<std::string> &options);
 };
 
 class JsonBoolean : public JsonPrimitive
@@ -97,13 +97,14 @@ class JsonNull : public JsonPrimitive
 
 class JsonArray : public JsonPrimitive
 {
+   public:
+      JsonArray(Json::Value *schema);
+      ~JsonArray();
+      int validate(const Json::Value *value);
+
    private:
       std::list<KeywordValidator*> m_validators; 
 
-   public:
-      JsonArray(Json::Value *schema);
-      ~JsonArray() {}
-      int validate(const Json::Value *value);
 };
 
 #endif

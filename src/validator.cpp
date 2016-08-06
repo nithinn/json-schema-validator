@@ -36,7 +36,29 @@
 #include <primitive.h>
 #include <validator.h>
 
-JsonValidator::JsonValidator(const char *schema_file)
+JsonValidator::JsonValidator()
+{
+   m_primitive = NULL;
+}
+
+JsonValidator::JsonValidator(std::string &schema)
+{
+   m_primitive = NULL;
+   parseSchema(schema);
+}
+
+JsonValidator::JsonValidator(Json::Value *schema)
+{
+   m_primitive = NULL;
+   m_primitive = JsonPrimitive::createPrimitive(schema);
+}
+
+JsonValidator::~JsonValidator()
+{
+   delete m_primitive;
+}
+
+void JsonValidator::readSchema(const char *schema_file)
 {
    std::ifstream t(schema_file);
 
@@ -59,7 +81,7 @@ void JsonValidator::parseSchema(std::string &str)
    Json::Value    schema;
    bool parsingSuccessful = reader.parse(str.c_str(), schema);
    if (!parsingSuccessful) {
-      throw Exception("Invalid schema file");
+      throw Exception(reader.getFormattedErrorMessages());
    }
 
    m_primitive = JsonPrimitive::createPrimitive(&schema);

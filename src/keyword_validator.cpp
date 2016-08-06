@@ -289,6 +289,13 @@ ItemsTuple::ItemsTuple(Json::Value items)
    }
 }
 
+ItemsTuple::~ItemsTuple()
+{
+   for (unsigned int i = 0; i < m_primitives.size(); i++) {
+      delete m_primitives[i];
+   }
+}
+
 int ItemsTuple::validate(const Json::Value *value)
 {
    for (std::size_t i = 0; i < value->size() && i < m_primitives.size(); i++) {
@@ -305,6 +312,11 @@ ItemsList::ItemsList(Json::Value items)
 {
    m_items = items;
    m_primitive = JsonPrimitive::createPrimitive(&items);
+}
+
+ItemsList::~ItemsList()
+{
+   delete m_primitive;
 }
 
 int ItemsList::validate(const Json::Value *value)
@@ -483,6 +495,16 @@ Properties::Properties(Json::Value properties, bool additionalProperties = true)
       Json::Value property = properties.get(itr.name(), property);
       JsonPrimitive *primitive = JsonPrimitive::createPrimitive(&property);
       m_primitives[itr.name()] = primitive;
+   }
+}
+
+Properties::~Properties()
+{
+   for (std::map<std::string, JsonPrimitive*>::iterator itr = \
+         m_primitives.begin(); itr != m_primitives.end();
+         itr++)
+   {
+      delete itr->second;
    }
 }
 

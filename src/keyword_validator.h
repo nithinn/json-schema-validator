@@ -23,34 +23,11 @@
 #ifndef __KEYWORD_VALIDATOR_H__
 #define __KEYWORD_VALIDATOR_H__
 
-#define JVAL_ROK                            0
-#define JVAL_ERR_INVALID_MAXIMUM            1
-#define JVAL_ERR_INVALID_MINIMUM            2
-#define JVAL_ERR_NOT_A_MULTIPLE             3
-#define JVAL_ERR_INVALID_MIN_LENGTH         4
-#define JVAL_ERR_INVALID_MAX_LENGTH         5
-#define JVAL_ERR_PATTERN_MISMATCH           6
-#define JVAL_ERR_INVALID_MAX_ITEMS          7
-#define JVAL_ERR_INVALID_MIN_ITEMS          8
-#define JVAL_ERR_DUPLICATE_ITEMS            9
-#define JVAL_ERR_INVALID_MAX_PROPERTIES     10
-#define JVAL_ERR_INVALID_MIN_PROPERTIES     11
-#define JVAL_ERR_REQUIRED_ITEM_MISSING      12
-#define JVAL_ERR_INVALID_ARRAY_ITEM         13
-#define JVAL_ERR_UNKNOWN_PROPERTY           15
-#define JVAL_ERR_INVALID_SCHEMA             16
-#define JVAL_ERR_NOT_AN_INTEGER             17
-#define JVAL_ERR_NOT_A_NUMBER               18
-#define JVAL_ERR_NOT_A_STRING               19
-#define JVAL_ERR_NOT_AN_ARRAY               20
-#define JVAL_ERR_NOT_AN_OBJECT              21
-#define JVAL_ERR_INVALID_PROPERTY           22
-#define JVAL_ERR_ADDITIONAL_ITEMS           23
-
 class KeywordValidator
 {
-    public:
-        virtual int validate(const Json::Value *value) = 0;
+   public:
+      virtual ~KeywordValidator() {};
+      virtual int validate(const Json::Value *value) = 0;
 };
 
 class IntValid : public KeywordValidator
@@ -214,7 +191,7 @@ class ItemsTuple : public KeywordValidator
 {
    public:
       ItemsTuple(Json::Value);
-      ~ItemsTuple() {}
+      ~ItemsTuple();
       int validate(const Json::Value *value);
 
    private:
@@ -226,7 +203,7 @@ class ItemsList : public KeywordValidator
 {
    public:
       ItemsList(Json::Value items);
-      ~ItemsList() {}
+      ~ItemsList();
       int validate(const Json::Value *value);
 
    private:
@@ -301,7 +278,7 @@ class Properties : public KeywordValidator
 {
    public:
       Properties(Json::Value, bool);
-      ~Properties() {}
+      ~Properties();
       int validate(const Json::Value *value);
 
    private:

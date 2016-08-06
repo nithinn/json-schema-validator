@@ -32,13 +32,14 @@ TEST(Validator, Basic)
    Json::Value v;
    v["id"]      = 1;
    v["name"]    = "nithin";
-   v["price"]   = "11.11";
+   v["price"]   = 11.11;
    v["tags"][0] = "green";
    v["tags"][1] = "red";
    v["dimensions"]["length"] = 1;
    v["dimensions"]["width"] = 1;
    v["dimensions"]["height"] = 1;
 
-   JsonValidator validator("schema1.json");
+   JsonValidator validator;
+   validator.readSchema("schema1.json");
    ASSERT_EQ(validator.validate(&v), 0);
 }

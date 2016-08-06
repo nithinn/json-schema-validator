@@ -84,25 +84,35 @@ TEST(createPrimitive, Negative)
 
 TEST(createPrimitive, Positive)
 {
+   JsonPrimitive *p = NULL;
+
    Json::Value a;
    a["type"] = "integer";
-   ASSERT_NO_THROW(JsonPrimitive::createPrimitive(&a));
-   ASSERT_TRUE(JsonPrimitive::createPrimitive(&a) != NULL);
+   ASSERT_NO_THROW(p = JsonPrimitive::createPrimitive(&a));
+   delete p;
+   ASSERT_TRUE((p = JsonPrimitive::createPrimitive(&a)) != NULL);
+   delete p;
 
    Json::Value b;
    b["type"] = "boolean";
-   ASSERT_NO_THROW(JsonPrimitive::createPrimitive(&b));
-   ASSERT_TRUE(JsonPrimitive::createPrimitive(&b) != NULL);
+   ASSERT_NO_THROW(p = JsonPrimitive::createPrimitive(&b));
+   delete p;
+   ASSERT_TRUE((p = JsonPrimitive::createPrimitive(&b)) != NULL);
+   delete p;
 
    Json::Value c;
    c["type"] = "string";
-   ASSERT_NO_THROW(JsonPrimitive::createPrimitive(&c));
-   ASSERT_TRUE(JsonPrimitive::createPrimitive(&c) != NULL);
+   ASSERT_NO_THROW(p = JsonPrimitive::createPrimitive(&c));
+   delete p;
+   ASSERT_TRUE((p = JsonPrimitive::createPrimitive(&c)) != NULL);
+   delete p;
 
    Json::Value d;
    d["type"] = "null";
-   ASSERT_NO_THROW(JsonPrimitive::createPrimitive(&d));
-   ASSERT_TRUE(JsonPrimitive::createPrimitive(&d) != NULL);
+   ASSERT_NO_THROW(p = JsonPrimitive::createPrimitive(&d));
+   delete p;
+   ASSERT_TRUE((p = JsonPrimitive::createPrimitive(&d)) != NULL);
+   delete p;
 }
 
 TEST(IntegerPrimitive, ValidInteger)
@@ -119,6 +129,7 @@ TEST(IntegerPrimitive, ValidInteger)
    ASSERT_EQ(jsonInt->validate(&b), JVAL_ROK);
    Json::Value c = -100;
    ASSERT_EQ(jsonInt->validate(&c), JVAL_ROK);
+   delete jsonInt;
 }
 
 TEST(IntegerPrimitive, InvalidInteger)
@@ -137,6 +148,7 @@ TEST(IntegerPrimitive, InvalidInteger)
    ASSERT_EQ(jsonInt->validate(&c), JVAL_ERR_NOT_AN_INTEGER);
    Json::Value d = 1.123;
    ASSERT_EQ(jsonInt->validate(&d), JVAL_ERR_NOT_AN_INTEGER);
+   delete jsonInt;
 }
 
 TEST(IntegerPrimitive, ValidMinimum)
@@ -152,6 +164,7 @@ TEST(IntegerPrimitive, ValidMinimum)
    ASSERT_EQ(jsonInt->validate(&a), JVAL_ROK);
    Json::Value b = 1000;
    ASSERT_EQ(jsonInt->validate(&b), JVAL_ROK);
+   delete jsonInt;
 }
 
 TEST(IntegerPrimitive, InvalidMinimum)
@@ -167,6 +180,7 @@ TEST(IntegerPrimitive, InvalidMinimum)
    ASSERT_EQ(jsonInt->validate(&a), JVAL_ERR_INVALID_MINIMUM);
    Json::Value b = -1;
    ASSERT_EQ(jsonInt->validate(&b), JVAL_ERR_INVALID_MINIMUM);
+   delete jsonInt;
 }
 
 TEST(IntegerPrimitive, ExlcusiveMinimum)
@@ -183,6 +197,7 @@ TEST(IntegerPrimitive, ExlcusiveMinimum)
    ASSERT_EQ(jsonInt->validate(&a), JVAL_ERR_INVALID_MINIMUM);
    Json::Value b = 100;
    ASSERT_EQ(jsonInt->validate(&b), JVAL_ERR_INVALID_MINIMUM);
+   delete jsonInt;
 }
 
 TEST(IntegerPrimitive, ValidMaximum)
@@ -198,6 +213,7 @@ TEST(IntegerPrimitive, ValidMaximum)
    ASSERT_EQ(jsonInt->validate(&a), JVAL_ROK);
    Json::Value b = 0;
    ASSERT_EQ(jsonInt->validate(&b), JVAL_ROK);
+   delete jsonInt;
 }
 
 TEST(IntegerPrimitive, InvalidMaximum)
@@ -213,6 +229,7 @@ TEST(IntegerPrimitive, InvalidMaximum)
    ASSERT_EQ(jsonInt->validate(&a), JVAL_ERR_INVALID_MAXIMUM);
    Json::Value b = 10000;
    ASSERT_EQ(jsonInt->validate(&b), JVAL_ERR_INVALID_MAXIMUM);
+   delete jsonInt;
 }
 
 TEST(IntegerPrimitive, ExlcusiveMaximum)
@@ -229,6 +246,7 @@ TEST(IntegerPrimitive, ExlcusiveMaximum)
    ASSERT_EQ(jsonInt->validate(&a), JVAL_ERR_INVALID_MAXIMUM);
    Json::Value b = 100;
    ASSERT_EQ(jsonInt->validate(&b), JVAL_ERR_INVALID_MAXIMUM);
+   delete jsonInt;
 }
 
 TEST(IntegerPrimitive, ValidMultipleOf)
@@ -246,6 +264,7 @@ TEST(IntegerPrimitive, ValidMultipleOf)
    ASSERT_EQ(jsonInt->validate(&b), JVAL_ROK);
    Json::Value c = 0;
    ASSERT_EQ(jsonInt->validate(&c), JVAL_ROK);
+   delete jsonInt;
 }
 
 TEST(IntegerPrimitive, InvalidMultipleOf)
@@ -261,6 +280,7 @@ TEST(IntegerPrimitive, InvalidMultipleOf)
    ASSERT_EQ(jsonInt->validate(&a), JVAL_ERR_NOT_A_MULTIPLE);
    Json::Value b = 21;
    ASSERT_EQ(jsonInt->validate(&b), JVAL_ERR_NOT_A_MULTIPLE);
+   delete jsonInt;
 }
 
 TEST(NumberPrimitive, ValidNumber)
@@ -277,6 +297,7 @@ TEST(NumberPrimitive, ValidNumber)
    ASSERT_EQ(jsonNum->validate(&b), JVAL_ROK);
    Json::Value c = -100.11;
    ASSERT_EQ(jsonNum->validate(&c), JVAL_ROK);
+   delete jsonNum;
 }
 
 TEST(NumberPrimitive, InvalidNumber)
@@ -291,6 +312,7 @@ TEST(NumberPrimitive, InvalidNumber)
    ASSERT_EQ(jsonNum->validate(&a), JVAL_ERR_NOT_A_NUMBER);
    Json::Value b = true;
    ASSERT_EQ(jsonNum->validate(&b), JVAL_ERR_NOT_A_NUMBER);
+   delete jsonNum;
 }
 
 TEST(NumberPrimitive, ValidMinimum)
@@ -306,6 +328,7 @@ TEST(NumberPrimitive, ValidMinimum)
    ASSERT_EQ(jsonNum->validate(&a), JVAL_ROK);
    Json::Value b = 1000;
    ASSERT_EQ(jsonNum->validate(&b), JVAL_ROK);
+   delete jsonNum;
 }
 
 TEST(NumberPrimitive, InvalidMinimum)
@@ -321,6 +344,7 @@ TEST(NumberPrimitive, InvalidMinimum)
    ASSERT_EQ(jsonNum->validate(&a), JVAL_ERR_INVALID_MINIMUM);
    Json::Value b = -1;
    ASSERT_EQ(jsonNum->validate(&b), JVAL_ERR_INVALID_MINIMUM);
+   delete jsonNum;
 }
 
 TEST(NumberPrimitive, ExlcusiveMinimum)
@@ -337,6 +361,7 @@ TEST(NumberPrimitive, ExlcusiveMinimum)
    ASSERT_EQ(jsonNum->validate(&a), JVAL_ERR_INVALID_MINIMUM);
    Json::Value b = 100;
    ASSERT_EQ(jsonNum->validate(&b), JVAL_ERR_INVALID_MINIMUM);
+   delete jsonNum;
 }
 
 TEST(NumberPrimitive, ValidMaximum)
@@ -352,6 +377,7 @@ TEST(NumberPrimitive, ValidMaximum)
    ASSERT_EQ(jsonNum->validate(&a), JVAL_ROK);
    Json::Value b = 0;
    ASSERT_EQ(jsonNum->validate(&b), JVAL_ROK);
+   delete jsonNum;
 }
 
 TEST(NumberPrimitive, InvalidMaximum)
@@ -367,6 +393,7 @@ TEST(NumberPrimitive, InvalidMaximum)
    ASSERT_EQ(jsonNum->validate(&a), JVAL_ERR_INVALID_MAXIMUM);
    Json::Value b = 10000;
    ASSERT_EQ(jsonNum->validate(&b), JVAL_ERR_INVALID_MAXIMUM);
+   delete jsonNum;
 }
 
 TEST(NumberPrimitive, ExlcusiveMaximum)
@@ -383,6 +410,7 @@ TEST(NumberPrimitive, ExlcusiveMaximum)
    ASSERT_EQ(jsonNum->validate(&a), JVAL_ERR_INVALID_MAXIMUM);
    Json::Value b = 100;
    ASSERT_EQ(jsonNum->validate(&b), JVAL_ERR_INVALID_MAXIMUM);
+   delete jsonNum;
 }
 
 TEST(NumberPrimitive, ValidMultipleOf)
@@ -398,6 +426,7 @@ TEST(NumberPrimitive, ValidMultipleOf)
    ASSERT_EQ(jsonNum->validate(&a), JVAL_ROK);
    Json::Value b = 124;
    ASSERT_EQ(jsonNum->validate(&b), JVAL_ROK);
+   delete jsonNum;
 }
 
 TEST(NumberPrimitive, InvalidMultipleOf)
@@ -413,6 +442,7 @@ TEST(NumberPrimitive, InvalidMultipleOf)
    ASSERT_EQ(jsonNum->validate(&a), JVAL_ERR_NOT_A_MULTIPLE);
    Json::Value b = 21;
    ASSERT_EQ(jsonNum->validate(&b), JVAL_ERR_NOT_A_MULTIPLE);
+   delete jsonNum;
 }
 
 TEST(StringPrimitive, InvalidString)
@@ -427,6 +457,7 @@ TEST(StringPrimitive, InvalidString)
    ASSERT_EQ(jsonStr->validate(&a), JVAL_ERR_NOT_A_STRING);
    Json::Value b = true;
    ASSERT_EQ(jsonStr->validate(&b), JVAL_ERR_NOT_A_STRING);
+   delete jsonStr;
 }
 
 TEST(StringPrimitive, ValidString)
@@ -441,6 +472,7 @@ TEST(StringPrimitive, ValidString)
    ASSERT_EQ(jsonStr->validate(&a), JVAL_ROK);
    Json::Value b = "true";
    ASSERT_EQ(jsonStr->validate(&b), JVAL_ROK);
+   delete jsonStr;
 }
 
 TEST(StringPrimitive, InvalidMinLength)
@@ -456,6 +488,7 @@ TEST(StringPrimitive, InvalidMinLength)
    ASSERT_EQ(jsonStr->validate(&a), JVAL_ERR_INVALID_MIN_LENGTH);
    Json::Value b = "";
    ASSERT_EQ(jsonStr->validate(&b), JVAL_ERR_INVALID_MIN_LENGTH);
+   delete jsonStr;
 }
 
 TEST(StringPrimitive, ValidMinLength)
@@ -471,6 +504,7 @@ TEST(StringPrimitive, ValidMinLength)
    ASSERT_EQ(jsonStr->validate(&a), JVAL_ROK);
    Json::Value b = "123456789";
    ASSERT_EQ(jsonStr->validate(&b), JVAL_ROK);
+   delete jsonStr;
 }
 
 TEST(StringPrimitive, InvalidMaxLength)
@@ -486,6 +520,7 @@ TEST(StringPrimitive, InvalidMaxLength)
    ASSERT_EQ(jsonStr->validate(&a), JVAL_ERR_INVALID_MAX_LENGTH);
    Json::Value b = "1234456789";
    ASSERT_EQ(jsonStr->validate(&b), JVAL_ERR_INVALID_MAX_LENGTH);
+   delete jsonStr;
 }
 
 TEST(StringPrimitive, ValidMaxLength)
@@ -503,6 +538,7 @@ TEST(StringPrimitive, ValidMaxLength)
    ASSERT_EQ(jsonStr->validate(&b), JVAL_ROK);
    Json::Value c = "";
    ASSERT_EQ(jsonStr->validate(&c), JVAL_ROK);
+   delete jsonStr;
 }
 
 TEST(StringPrimitive, ValidRegex)
@@ -518,6 +554,7 @@ TEST(StringPrimitive, ValidRegex)
    ASSERT_EQ(jsonStr->validate(&a), JVAL_ROK);
    Json::Value b = "1234";
    ASSERT_EQ(jsonStr->validate(&b), JVAL_ROK);
+   delete jsonStr;
 }
 
 TEST(StringPrimitive, InvalidRegex)
@@ -533,6 +570,7 @@ TEST(StringPrimitive, InvalidRegex)
    ASSERT_EQ(jsonStr->validate(&a), JVAL_ERR_PATTERN_MISMATCH);
    Json::Value b = "abc";
    ASSERT_EQ(jsonStr->validate(&b), JVAL_ERR_PATTERN_MISMATCH);
+   delete jsonStr;
 }
 
 TEST(ArrayPrimitive, ValidArray)
@@ -551,6 +589,7 @@ TEST(ArrayPrimitive, ValidArray)
    b[0] = "abc";
    b[1] = "dcd";
    ASSERT_EQ(jsonArr->validate(&b), JVAL_ROK);
+   delete jsonArr;
 }
 
 TEST(ArrayPrimitive, ValidMinItems)
@@ -571,6 +610,7 @@ TEST(ArrayPrimitive, ValidMinItems)
    b[1] = "dcd";
    b[2] = 3;
    ASSERT_EQ(jsonArr->validate(&b), JVAL_ROK);
+   delete jsonArr;
 }
 
 TEST(ArrayPrimitive, InvalidMinItems)
@@ -589,6 +629,7 @@ TEST(ArrayPrimitive, InvalidMinItems)
    b[0] = "abc";
    b[1] = "dcd";
    ASSERT_EQ(jsonArr->validate(&b), JVAL_ERR_INVALID_MIN_ITEMS);
+   delete jsonArr;
 }
 
 TEST(ArrayPrimitive, ValidMaxItems)
@@ -607,6 +648,7 @@ TEST(ArrayPrimitive, ValidMaxItems)
    Json::Value b;
    b[0] = "abc";
    ASSERT_EQ(jsonArr->validate(&b), JVAL_ROK);
+   delete jsonArr;
 }
 
 TEST(ArrayPrimitive, InvalidMaxItems)
@@ -628,6 +670,7 @@ TEST(ArrayPrimitive, InvalidMaxItems)
    b[1] = "dcd";
    b[2] = 3;
    ASSERT_EQ(jsonArr->validate(&b), JVAL_ERR_INVALID_MAX_ITEMS);
+   delete jsonArr;
 }
 
 TEST(ArrayPrimitive, ItemsTuple)
@@ -646,6 +689,7 @@ TEST(ArrayPrimitive, ItemsTuple)
    a[1] = "b";
    a[2] = 1;
    ASSERT_EQ(jsonArr->validate(&a), JVAL_ROK);
+   delete jsonArr;
 }
 
 TEST(ArrayPrimitive, AdditionalItemsOk)
@@ -666,6 +710,7 @@ TEST(ArrayPrimitive, AdditionalItemsOk)
    a[2] = 1;
    a[3] = 4;
    ASSERT_EQ(jsonArr->validate(&a), JVAL_ROK);
+   delete jsonArr;
 }
 
 TEST(ArrayPrimitive, AdditionalItemsNotOk)
@@ -686,6 +731,7 @@ TEST(ArrayPrimitive, AdditionalItemsNotOk)
    a[2] = 1;
    a[3] = 4;
    ASSERT_EQ(jsonArr->validate(&a), JVAL_ERR_ADDITIONAL_ITEMS);
+   delete jsonArr;
 }
 
 TEST(ArrayPrimitive, ItemsList)
@@ -702,6 +748,7 @@ TEST(ArrayPrimitive, ItemsList)
    a[1] = 2;
    a[2] = 100;
    ASSERT_EQ(jsonArr->validate(&a), JVAL_ROK);
+   delete jsonArr;
 }
 
 TEST(ArrayPrimitive, ValidUniqueItems)
@@ -719,6 +766,7 @@ TEST(ArrayPrimitive, ValidUniqueItems)
    a[1] = 2;
    a[2] = 100;
    ASSERT_EQ(jsonArr->validate(&a), JVAL_ROK);
+   delete jsonArr;
 }
 
 TEST(ArrayPrimitive, InvalidUniqueItems)
@@ -736,6 +784,7 @@ TEST(ArrayPrimitive, InvalidUniqueItems)
    a[1] = 2;
    a[2] = 2;
    ASSERT_EQ(jsonArr->validate(&a), JVAL_ERR_DUPLICATE_ITEMS);
+   delete jsonArr;
 }
 
 TEST(ObjectPrimitive, ValidObject)
@@ -749,6 +798,7 @@ TEST(ObjectPrimitive, ValidObject)
    Json::Value a;
    a["id"] = 0;
    ASSERT_EQ(jsonObj->validate(&a), JVAL_ROK);
+   delete jsonObj;
 }
 
 TEST(ObjectPrimitive, InvalidObject)
@@ -764,6 +814,7 @@ TEST(ObjectPrimitive, InvalidObject)
    ASSERT_EQ(jsonObj->validate(&a), JVAL_ERR_NOT_AN_OBJECT);
    Json::Value b = 0;
    ASSERT_EQ(jsonObj->validate(&b), JVAL_ERR_NOT_AN_OBJECT);
+   delete jsonObj;
 }
 
 TEST(ObjectPrimitive, ValidMaxProperties)
@@ -778,6 +829,7 @@ TEST(ObjectPrimitive, ValidMaxProperties)
    Json::Value a;
    a["id"] = 0;
    ASSERT_EQ(jsonObj->validate(&a), JVAL_ROK);
+   delete jsonObj;
 }
 
 TEST(ObjectPrimitive, InvalidMaxProperties)
@@ -793,6 +845,7 @@ TEST(ObjectPrimitive, InvalidMaxProperties)
    a["id1"] = 0;
    a["id2"] = 0;
    ASSERT_EQ(jsonObj->validate(&a), JVAL_ERR_INVALID_MAX_PROPERTIES);
+   delete jsonObj;
 }
 
 TEST(ObjectPrimitive, ValidMinProperties)
@@ -808,6 +861,7 @@ TEST(ObjectPrimitive, ValidMinProperties)
    a["id1"] = 0;
    a["id2"] = 0;
    ASSERT_EQ(jsonObj->validate(&a), JVAL_ROK);
+   delete jsonObj;
 }
 
 TEST(ObjectPrimitive, InvalidMinProperties)
@@ -822,6 +876,7 @@ TEST(ObjectPrimitive, InvalidMinProperties)
    Json::Value a;
    a["id1"] = 0;
    ASSERT_EQ(jsonObj->validate(&a), JVAL_ERR_INVALID_MIN_PROPERTIES);
+   delete jsonObj;
 }
 
 TEST(ObjectPrimitive, InvalidRequiredProperties)
@@ -837,6 +892,7 @@ TEST(ObjectPrimitive, InvalidRequiredProperties)
    Json::Value a;
    a["id1"] = 0;
    ASSERT_EQ(jsonObj->validate(&a), JVAL_ERR_REQUIRED_ITEM_MISSING);
+   delete jsonObj;
 }
 
 TEST(ObjectPrimitive, ValidRequiredProperties)
@@ -859,6 +915,7 @@ TEST(ObjectPrimitive, ValidRequiredProperties)
    b["id2"] = 0;
    b["id3"] = 0;
    ASSERT_EQ(jsonObj->validate(&b), JVAL_ROK);
+   delete jsonObj;
 }
 
 TEST(ObjectPrimitive, ValidProperties)
@@ -877,4 +934,5 @@ TEST(ObjectPrimitive, ValidProperties)
    a["name"] = "abcd";
    a["present"] = true;
    ASSERT_EQ(jsonObj->validate(&a), JVAL_ROK);
+   delete jsonObj;
 }
