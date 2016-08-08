@@ -11,13 +11,12 @@ in C++ and JsonCpp for parsing and traversing the JSON data.
 
 
 ## 2. Dependencies
-This software uses JsonCpp 1.7.2 for parsing the json schema file and the user provided json data, which is part of this codebase.
-
-Tested with c++0x 
+This software uses JsonCpp 1.7.2 for parsing the json schema file and the user provided json data, which is part of this codebase. 
+The current version is compiled and tested with c++0x 
 
 ## 3. Using JSON Schema Validator in your project
 Add the source code (.cpp and .h files) under 'src' and 'jsoncpp' directory into your project and compile and build as you would any other source file.
-The 'src/' and 'jsoncpp/json/' should be added to your compiler include path. The headers files that must be included in your source code as follows:
+The **'src/'** and **'jsoncpp/json/'** should be added to your compiler include path. The headers files that must be included in your source code as follows:
 
 ```
 #include <json.h>
