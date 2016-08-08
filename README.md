@@ -19,21 +19,21 @@ Tested with c++0x
 Add the source code (.cpp and .h files) under 'src' and 'jsoncpp' directory into your project and compile and build as you would any other source file.
 The 'src/' and 'jsoncpp/json/' should be added to your compiler include path. The headers files that must be included in your source code as follows:
 
-...
+```
 #include <json.h>
 #include <validdator.>
-...
+```
 
 the 'sample' directory has an example code that show how to use this schema validator in your application.
 
 ## 4. Testing
 Unit testing and validation is done using GTEST 1.7.0. For running the test suite do the following:
 
-...
+```
 >> cd test/ut/
 >> make
 >> ./jvalut
-...
+```
 
 
 ## 5. License
